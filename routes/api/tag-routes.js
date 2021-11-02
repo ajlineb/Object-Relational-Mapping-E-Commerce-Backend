@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagsData = await Tag.findAll({
-      include: [{ model: Product}]
+      include: [{ model: Product, through: ProductTag, as: 'tagged_Product'}],
     });
     res.status(200).json(tagsData);
   } catch (err) {
@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
   // create a new tag
   try {
     Tag.create({
-      tag_name: req.body.product_name,
+      tag_name: req.body.tag_name,
     })
     .then((newTag) => {
       res.status(200).json(newTag);
@@ -53,7 +53,7 @@ router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
     {
-      tag_name: req.body.category_name,
+      tag_name: req.body.tag_name,
     },
     {
       where: {
