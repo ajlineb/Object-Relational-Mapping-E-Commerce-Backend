@@ -121,7 +121,7 @@ router.delete('/:id', (req, res) => {
   .then((deletedProduct) => {
     res.json(deletedProduct);
   })
-  .catch((err) => res.json(err));
+  .catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;
